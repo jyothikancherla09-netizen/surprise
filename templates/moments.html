@@ -99,13 +99,16 @@ function changeSlide(){
     }
 
     next.src = photos[slideIndex].img;
-    caption.innerText = photos[slideIndex].text;
 
-   current.classList.remove("active");
+    next.onload = function() {
 
-    setTimeout(() => {
+        caption.innerText = photos[slideIndex].text;
+
+        current.classList.remove("active");
+
         next.classList.add("active");
-    }, 50);
+};
+
 
 }
 
