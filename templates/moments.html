@@ -101,16 +101,25 @@ function changeSlide(){
     next.src = photos[slideIndex].img;
     caption.innerText = photos[slideIndex].text;
 
-    next.classList.add("active");
-    current.classList.remove("active");
+   current.classList.remove("active");
+
+    setTimeout(() => {
+        next.classList.add("active");
+    }, 50);
+
 }
 
-setInterval(changeSlide, 4000);
+let slideInterval = setInterval(changeSlide, 4000);
+
 
 nextBtn.onclick = function(){
+
+    clearInterval(slideInterval); // 🔥 STOP slideshow
+
     document.getElementById("momentsSection").style.display = "none";
     document.getElementById("inputSection").style.display = "block";
 };
+
 
 // ================= INPUT =================
 function checkLove(){
