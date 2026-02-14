@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="bg">
+    <div class="hearts"></div>
+
+<!-- 🎵 ONE Audio Element -->
+<audio id="bgMusic" autoplay loop>
+    <source src="/static/music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ================= MOMENTS ================= -->
+<div class="center-wrap">
+    <div id="momentsSection" class="card">
+
+    <div class="slideshow">
+        <img id="img1" class="slide active">
+        <img id="img2" class="slide">
+    </div>
+
+    <h3 id="caption"></h3>
+
+    <button id="nextBtn" style="display:none;">
+        Next ❤️
+    </button>
+
+</div>
+
+<!-- ================= INPUT ================= -->
+<div id="inputSection" class="card" style="display:none;">
+
+    <div class="input-card">
+        <h2>Hey handsome ❤️</h2>
+
+        <p>Type "i love you wifey" to unlock my surprise Love letter!</p>
+
+        <input id="loveInput" placeholder="Type here">
+        <br><br>
+        <button onclick="checkLove()">Submit 💌</button>
+
+        <p id="error" class="error-text"></p>
+    </div>
+
+</div>
+
+<!-- ================= LETTER ================= -->
+<div id="letterSection" class="card" style="display:none;">
+
+    <div class="letter-card">
+        <h2>Happy Valentine's Day Dear❤️</h2>
+        <p id="letterText" class="letter-text"></p>
+    </div>
+
+</div>
+
+<script>
+
+// ================= MUSIC =================
+const music = document.getElementById("bgMusic");
+
+// ================= SLIDESHOW =================
+const photos = [
+    {img:"/static/images/photo1.jpg", text:"Our Beautiful Beginning On Pellichoopulu 💕"},
+    {img:"/static/images/photo2.jpg", text:"Our First Outing Together 💞"},
+    {img:"/static/images/photo3.jpg", text:"Our Cute Memories 🥰"},
+    {img:"/static/images/photo4.jpg", text:"Our Prewedding Shoot ❤️"},
+    {img:"/static/images/photo5.jpg", text:"Post Wedding Pics 💫"},
+    {img:"/static/images/photo6.jpg", text:"Our Forever Begins 💕"},
+    {img:"/static/images/photo7.jpg", text:"Just Us....Lost in Love and Honeymoon Bliss 😍"},
+    {img:"/static/images/photo8.jpg", text:"From Couple to Parents...Our Biggest Blessing Begins 💖"},
+    {img:"/static/images/photo9.jpg", text:"The Love We Created ❤️"},
+    {img:"/static/images/photo10.jpg", text:"Always Us 💑"},
+    {img:"/static/images/photo11.jpg", text:"Forever & Always 💞"}
+];
+
+let slideIndex = 0;
+
+const img1 = document.getElementById("img1");
+const img2 = document.getElementById("img2");
+const caption = document.getElementById("caption");
+const nextBtn = document.getElementById("nextBtn");
+
+img1.src = photos[0].img;
+caption.innerText = photos[0].text;
+
+function changeSlide(){
+
+    let current = slideIndex % 2 === 0 ? img1 : img2;
+    let next = slideIndex % 2 === 0 ? img2 : img1;
+
+    slideIndex++;
+
+    if(slideIndex >= photos.length){
+        nextBtn.style.display = "inline-block";
+        return;
+    }
+
+    next.src = photos[slideIndex].img;
+    caption.innerText = photos[slideIndex].text;
+
+    next.classList.add("active");
+    current.classList.remove("active");
+}
+
+setInterval(changeSlide, 4000);
+
+nextBtn.onclick = function(){
+    document.getElementById("momentsSection").style.display = "none";
+    document.getElementById("inputSection").style.display = "block";
+};
+
+// ================= INPUT =================
+function checkLove(){
+
+    let val = document.getElementById("loveInput")
+        .value.trim().toLowerCase();
+
+    if(val === "i love you wifey"){
+
+        document.getElementById("inputSection").style.display = "none";
+        document.getElementById("letterSection").style.display = "block";
+
+        startTyping();
+    }
+    else{
+        document.getElementById("error")
+            .innerText = "Nope! Type it properly baby 🥺";
+    }
+}
+
+// ================= LETTER =================
+let index = 0;
+
+const text = `To the man who makes my heart skip a beat even today.
+I love you more than words can ever express.My love, you've been my everything since the day we met...
+Even after marriage, our love keeps growing stronger.
+Thank you for being my strength, my comfort and my biggest supporter. I love you endlessly.
+Our life, our little family and every moment with you is my greatest blessing.
+Forever yours ❤️`;
+
+function startTyping(){
+    index = 0;
+    document.getElementById("letterText").innerHTML = "";
+    typeLetter();
+}
+
+function typeLetter(){
+
+    const letter = document.getElementById("letterText");
+
+    if(index < text.length){
+        letter.innerHTML += text[index];
+        index++;
+        setTimeout(typeLetter, 40);
+    }
+    else{
+        // Stop music when typing finishes
+        music.pause();
+        music.currentTime = 0;
+    }
+}
+
+</script>
+
+</body>
+</html>
